@@ -1,0 +1,102 @@
+#+TITLE: Org mode introduction and package management
+#+OPTIONS: num:nil
+
+* Startup
+** Create and edit emacs configuration file
+
+Usually it can be found at =~/.emacs/init.el= or =~/.emacs.el, ~/.emacs.d/init.el, ~/.config/emacs/init.el=.
+- [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html][Emacs init file]]: syntax, [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Find-Init.html][location (and how to find init file)]], startup
+
+** Installing orgmode itself and required packages manually
+
+*** Activation
+
+For the most emacs distributions Orgmode is already pre-installed.
+In order to [[https://orgmode.org/org.html#Activation][activate]] it you need to edit the =init.el= file, see sample code below. (Pay attention to the quote sign when you copy from the =.pdf= file)
+#+BEGIN_SRC elisp
+;;;;Org mode configuration
+;; Enable Org mode
+(require 'org)
+#+END_SRC
+
+*** Manual package management
+
+All org-mode plugins as well as emacs extension can be dowloaded as emacs-lisp /.el/ files.
+Next step is to edit the initialization file and provide the path of an any desired package.
+This can be done as follows:
+
+#+BEGIN_SRC elisp
+;; where I have htmlize.el
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+(require 'htmlize)
+#+END_SRC
+
+where =lisp= folder is one you use to store plugins .el files.
+
+* Org-mode features
+** Configuring the appearance of an output file /(METADATA)/
+*** Adjust numeration
+=#+OPTIONS: num:nil=
+If you want to limit it to only a certain depth you can replace nil with an integer specifying up to which headline you want the numbers to appear. 
+For example =#+options: num:1= would turn your sample into:
+#+BEGIN_SRC
+1. Heading
+   Sub-Heading
+2. Another Heading
+#+END_SRC
+
+*** Remove/add table of contents ([[#+OPTIONS: toc:2          (only include two levels in TOC)%0A#+OPTIONS: toc:nil        (no default TOC at all)][description]])
+=#+OPTIONS: toc:2          (only include two levels in TOC)=
+=#+OPTIONS: toc:nil        (no default TOC at all)=
+
+** Checklists in org-mode
+See [[https://redgreenrepeat.com/2019/10/04/checklists-in-org-mode/][this page]]:
+ - Progress details: just add [/] to display progress count and [%] to show percentage.
+* Exporting notes
+General description of availiable back-ends can be found [[https://orgmode.org/manual/Exporting.html#Exporting][here]].
+
+------
+** Install htmlize
+You can install it using code above. The source file =htmlize.el= can be downloaded [[https://github.com/hniksic/emacs-htmlize][here]].
+
+** Install latex-beamer export
+By default some export backends are muted. To unmute the latex-beamer back-end add the following line into the =init.el= file.
+#+BEGIN_SRC elisp
+(require 'ox-beamer)
+#+END_SRC
+** Install twitter bootstrap html export
+Package and instructions ([[https://github.com/marsmining/ox-twbs][link]])
+
+** Automatic package management
+Install [[https://melpa.org/#/getting-started][MELPA]] package. This package append decription of packages into =init.el= file. 
+-----
+* Emacs configurations
+Launching emacs with =emacs -q= inhibits startup
+e.g. =emacs -q -l init.el=
+You can apply the changes right from the init.el configuration file by running 'M-x ev-b' (evaluate the buffer)
+
+** Setting up a minimalistic view
+What you can add to your init.el file:
+#+BEGIN_SRC elisp
+(setq inhibit-startup-message t)
+
+(scroll-bar-mode -1) ; Disable visible scrollbar
+(tool-bar-mode -1)   ; Disable the toolbar
+(tooltip-mode -1)    ; Disable tooltips
+(set-fringe-mode 10) ; Give some breathing room
+
+(menu-bar-mode -1)   ; Disable the menu bar
+
+; Set up the visible bell
+(setq visible-bell t)
+
+#+END_SRC
+
+** Install and use =ivy=
+
+** Themes
+Set a new color [[http://xahlee.info/emacs/emacs/emacs_playing_with_color_theme.html][palette]]: run =M-x customize-themes= or =M-x load-theme=.
+If you want to install a color theme different from default you can do it [[https://github.com/sellout/emacs-color-theme-solarized][manually]].
+
+** Package to preview .org within emacs
+[[https://github.com/jakebox/org-preview-html][org-preview-html]]

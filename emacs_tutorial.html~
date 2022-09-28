@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2022-09-28 Wed 19:09 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Emacs setup and configuration</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="ivan" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Emacs setup and configuration</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org30739b9">1. Running emacs in a terminal:</a>
+<ul>
+<li><a href="#org5204a63">1.1. Windows and frames concept</a></li>
+<li><a href="#orgb3012ce">1.2. Buffers</a>
+<ul>
+<li><a href="#org2af923c">1.2.1. Special buffers:</a></li>
+</ul>
+</li>
+<li><a href="#orgf738a56">1.3. The Mode line</a></li>
+<li><a href="#org380536a">1.4. Echo are and a minibuffer</a></li>
+<li><a href="#org1b39df4">1.5. Commands in emacs</a>
+<ul>
+<li><a href="#org3c0b96c">1.5.1. Some useful commands:</a></li>
+</ul>
+</li>
+<li><a href="#org1d28707">1.6. Major and minor modes</a>
+<ul>
+<li><a href="#org96eef1c">1.6.1. Major mode</a></li>
+<li><a href="#org43a739e">1.6.2. Minor mode</a></li>
+<li><a href="#orgbdd1a7e">1.6.3. Basic Key bindings</a></li>
+</ul>
+</li>
+<li><a href="#orgcffaa85">1.7. Opening and saving files</a></li>
+<li><a href="#orgb954e43">1.8. Switching buffers</a></li>
+<li><a href="#orge71d0d6">1.9. Cut and copy text</a></li>
+<li><a href="#org76e702d">1.10. CUA mode</a></li>
+<li><a href="#orgaf32970">1.11. Undo and redo</a></li>
+<li><a href="#org7d64966">1.12. Cancelling operations</a></li>
+<li><a href="#org9b35772">1.13. Describe bindings</a></li>
+<li><a href="#orgfb80cf6">1.14. Help system</a></li>
+<li><a href="#org7dadadf">1.15. Configuring emacs</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org30739b9" class="outline-2">
+<h2 id="org30739b9"><span class="section-number-2">1</span> Running emacs in a terminal:</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Launch: <code>emacs -Q -nw</code>
+F10 key shows the terminal mode menu for emacs
+</p>
+<ul class="org-ul">
+<li>no file tree.. However community packages can be added for file management</li>
+</ul>
+</div>
+
+<div id="outline-container-org5204a63" class="outline-3">
+<h3 id="org5204a63"><span class="section-number-3">1.1</span> Windows and frames concept</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+In 'Emacs' window is a pane inside current emacs window. 
+Windows can be splitted. Emacs frame is your current workspace. Keybinding <code>C-x 5 2</code> creates a new frame.
+You can use mutiple frames i.e. while using it as your desktop environment. 
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb3012ce" class="outline-3">
+<h3 id="orgb3012ce"><span class="section-number-3">1.2</span> Buffers</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Buffer is an object that holds information to be displayed, store logs, messagess etc. 
+The latter are special buffers. Buffer can be used to create an interface.
+<code>M-x global-tab-line-mode</code> can be used to turn on the tab interface to display all active buffers at once. <i>If the package is installed.</i>
+But it's better to use buffers management commands. <code>C-x b</code> brings up a buffer lists and you can switch between them.
+</p>
+</div>
+<div id="outline-container-org2af923c" class="outline-4">
+<h4 id="org2af923c"><span class="section-number-4">1.2.1</span> Special buffers:</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<ul class="org-ul">
+<li><b>scratch</b> buffer</li>
+</ul>
+<p>
+Blank page for temporary notes or copy text that's not needed to be saved.
+You can use elisp code there too.
+</p>
+<ul class="org-ul">
+<li><b>Messages</b> buffer</li>
+</ul>
+<p>
+Is a messages log that contains all messages. 
+</p>
+<ul class="org-ul">
+<li><b>Warnings</b> buffer</li>
+</ul>
+<p>
+Shows potential errors (e.g. from packages). Something to keep in mind.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf738a56" class="outline-3">
+<h3 id="orgf738a56"><span class="section-number-3">1.3</span> The Mode line</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+Gives information about current state of the editor. 
+It can show current git branch that's being used at the moment. 
+There is only one mode line per window inside emacs.
+</p>
+
+<p>
+Emacs is fully customizable, so try differemt mode line packages.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org380536a" class="outline-3">
+<h3 id="org380536a"><span class="section-number-3">1.4</span> Echo are and a minibuffer</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+Line where messages get written at the bottom of the screen.
+Shows transient information. 
+Minibuffer is another temporary interaction space. Promts for commands etc.
+It can be multiple line too. 
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1b39df4" class="outline-3">
+<h3 id="org1b39df4"><span class="section-number-3">1.5</span> Commands in emacs</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+Commands are used for editing, 
+To run a command hit a keybinding: <code>M-x</code> and type <code>command</code>. Press <code>Tab</code> for autocompletion.
+Many commands have prefixes with particular concepts, that helps in completions within certain subsets.
+</p>
+</div>
+
+<div id="outline-container-org3c0b96c" class="outline-4">
+<h4 id="org3c0b96c"><span class="section-number-4">1.5.1</span> Some useful commands:</h4>
+<div class="outline-text-4" id="text-1-5-1">
+<ul class="org-ul">
+<li>dired &#x2013; does file listings, director browser inside emacs. Shows the <code>ls -lah</code> output.</li>
+<li>show calendar <code>M-x calendar</code></li>
+<li>built-in shell <code>M-x eshell</code></li>
+</ul>
+<p>
+Embedded shell emulates batch because it's written in elisp.
+</p>
+<ul class="org-ul">
+<li>tetris <code>M-x tetris</code></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1d28707" class="outline-3">
+<h3 id="org1d28707"><span class="section-number-3">1.6</span> Major and minor modes</h3>
+<div class="outline-text-3" id="text-1-6">
+</div>
+<div id="outline-container-org96eef1c" class="outline-4">
+<h4 id="org96eef1c"><span class="section-number-4">1.6.1</span> Major mode</h4>
+<div class="outline-text-4" id="text-1-6-1">
+<p>
+Depending on the file extension emacs activates the particular functionality to work with these files.
+Major mode provides functionality for a particular buffer (org mode, python mode,&#x2026;). 
+Turns on the syntax highliting too.
+Core functionality for a specific buffer. Major modes are activated with special commands.
+E.g. <code>M-x org-mode</code> tuns major mode for <i>.org</i> files.
+Fundamental moe is one without any special functionality included.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org43a739e" class="outline-4">
+<h4 id="org43a739e"><span class="section-number-4">1.6.2</span> Minor mode</h4>
+<div class="outline-text-4" id="text-1-6-2">
+<p>
+Works globally across emacs. E.g. if you need to customize your workflow, then third-party packages provide this functonality you need.
+For instance <code>hl-line-mode</code> that highlits current line. Switching to another buffer turns this mode off. Minor mode works only in one buffer, 
+but some of them can work globally too. 
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbdd1a7e" class="outline-4">
+<h4 id="orgbdd1a7e"><span class="section-number-4">1.6.3</span> Basic Key bindings</h4>
+<div class="outline-text-4" id="text-1-6-3">
+<p>
+Bindings are completely flexible and customizable.
+The syntax is a litlle bit peculiar:
+</p>
+<ul class="org-ul">
+<li><code>C-x C-s</code> Hold Ctrl and press 'x' and then 's' still holdind Ctrl.</li>
+<li><code>C-x b</code> Release Ctrl and press 'b'</li>
+</ul>
+<p>
+Single letters can be interpreted as follows:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Letter</th>
+<th scope="col" class="org-left">Key</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">C</td>
+<td class="org-left">Ctrl</td>
+</tr>
+
+<tr>
+<td class="org-left">M</td>
+<td class="org-left">Alt (Meta)</td>
+</tr>
+
+<tr>
+<td class="org-left">S</td>
+<td class="org-left">Shift</td>
+</tr>
+
+<tr>
+<td class="org-left">s</td>
+<td class="org-left">Super</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Prefixes:
+</p>
+<ul class="org-ul">
+<li><code>C-x</code> prefix for all emacs primary key bindings</li>
+<li><code>C-c</code> keybindings for current major mode. It also can be used for user defined keybindigs.</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcffaa85" class="outline-3">
+<h3 id="orgcffaa85"><span class="section-number-3">1.7</span> Opening and saving files</h3>
+<div class="outline-text-3" id="text-1-7">
+<p>
+Basic file operations:
+<code>C-x C-f</code> to open a file (find-file). 
+<code>C-x C-s</code> to save a file
+Save current buffer to another location (Save as..)
+<code>C-x C-w</code> to write a file
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb954e43" class="outline-3">
+<h3 id="orgb954e43"><span class="section-number-3">1.8</span> Switching buffers</h3>
+<div class="outline-text-3" id="text-1-8">
+<p>
+<code>C-x b</code> switch to a particular buffer.
+<code>C-x C-b</code> list all buffers
+<code>C-x left/right arrow</code> switch between buffer chain (next/previous)
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge71d0d6" class="outline-3">
+<h3 id="orge71d0d6"><span class="section-number-3">1.9</span> Cut and copy text</h3>
+<div class="outline-text-3" id="text-1-9">
+<p>
+To kill (copy-delete) text
+</p>
+<ol class="org-ol">
+<li>Mark the region using <code>C-Space</code></li>
+<li>Hit <code>C-w</code> to delete and copy the text into a kill ring</li>
+<li>Yank (paste) text with <code>C-y</code></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org76e702d" class="outline-3">
+<h3 id="org76e702d"><span class="section-number-3">1.10</span> CUA mode</h3>
+<div class="outline-text-3" id="text-1-10">
+<p>
+Activates conventional keybindings <code>C-c</code>, <code>C-v</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgaf32970" class="outline-3">
+<h3 id="orgaf32970"><span class="section-number-3">1.11</span> Undo and redo</h3>
+<div class="outline-text-3" id="text-1-11">
+<p>
+<code>C-/</code> to undo (<code>C-_</code> by default)
+<code>C-g C-/</code> to inverse undo direction
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7d64966" class="outline-3">
+<h3 id="org7d64966"><span class="section-number-3">1.12</span> Cancelling operations</h3>
+<div class="outline-text-3" id="text-1-12">
+<p>
+E.g. cancels operation before it completes.
+<code>C-g</code> cancels command and brings you back into editing.
+Keeps you out of a jam in a lot of cases.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9b35772" class="outline-3">
+<h3 id="org9b35772"><span class="section-number-3">1.13</span> Describe bindings</h3>
+<div class="outline-text-3" id="text-1-13">
+<p>
+<code>M-x describe-bindings</code>
+<code>M-x describe-key</code> or <code>C-h k</code>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgfb80cf6" class="outline-3">
+<h3 id="orgfb80cf6"><span class="section-number-3">1.14</span> Help system</h3>
+<div class="outline-text-3" id="text-1-14">
+<p>
+Emacs manual is built in, and you can navigate through it.
+You can simply go to <i>Help</i> menu. 
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7dadadf" class="outline-3">
+<h3 id="org7dadadf"><span class="section-number-3">1.15</span> Configuring emacs</h3>
+<div class="outline-text-3" id="text-1-15">
+<ol class="org-ol">
+<li>Customization UI</li>
+</ol>
+<p>
+To get there type <code>M-x customize</code>
+</p>
+<ol class="org-ol">
+<li><code>init.el</code> file</li>
+</ol>
+<p>
+Actual emacs lisp code to configure emacs. You can define your own functions too.
+You can then share it between machines.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: ivan</p>
+<p class="date">Created: 2022-09-28 Wed 19:09</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
