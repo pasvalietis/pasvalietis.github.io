@@ -1,0 +1,127 @@
+#+TITLE: Emacs setup and configuration
+
+* Running emacs in a terminal:
+Launch: =emacs -Q -nw=
+F10 key shows the terminal mode menu for emacs
+- no file tree.. However community packages can be added for file management
+
+** Windows and frames concept
+In 'Emacs' window is a pane inside current emacs window. 
+Windows can be splitted. Emacs frame is your current workspace. Keybinding =C-x 5 2= creates a new frame.
+You can use mutiple frames i.e. while using it as your desktop environment. 
+
+** Buffers
+Buffer is an object that holds information to be displayed, store logs, messagess etc. 
+The latter are special buffers. Buffer can be used to create an interface.
+=M-x global-tab-line-mode= can be used to turn on the tab interface to display all active buffers at once. /If the package is installed./
+But it's better to use buffers management commands. =C-x b= brings up a buffer lists and you can switch between them.
+*** Special buffers:
+- *scratch* buffer
+Blank page for temporary notes or copy text that's not needed to be saved.
+You can use elisp code there too.
+- *Messages* buffer
+Is a messages log that contains all messages. 
+- *Warnings* buffer
+Shows potential errors (e.g. from packages). Something to keep in mind.
+
+** The Mode line
+Gives information about current state of the editor. 
+It can show current git branch that's being used at the moment. 
+There is only one mode line per window inside emacs.
+
+Emacs is fully customizable, so try differemt mode line packages.
+
+** Echo are and a minibuffer
+Line where messages get written at the bottom of the screen.
+Shows transient information. 
+Minibuffer is another temporary interaction space. Promts for commands etc.
+It can be multiple line too. 
+
+** Commands in emacs
+Commands are used for editing, 
+To run a command hit a keybinding: =M-x= and type =command=. Press =Tab= for autocompletion.
+Many commands have prefixes with particular concepts, that helps in completions within certain subsets.
+
+*** Some useful commands:
+- dired -- does file listings, director browser inside emacs. Shows the =ls -lah= output.
+- show calendar =M-x calendar=
+- built-in shell =M-x eshell= 
+Embedded shell emulates batch because it's written in elisp.
+- tetris =M-x tetris=
+
+** Major and minor modes
+*** Major mode
+Depending on the file extension emacs activates the particular functionality to work with these files.
+Major mode provides functionality for a particular buffer (org mode, python mode,...). 
+Turns on the syntax highliting too.
+Core functionality for a specific buffer. Major modes are activated with special commands.
+E.g. =M-x org-mode= tuns major mode for /.org/ files.
+Fundamental moe is one without any special functionality included.
+
+*** Minor mode
+Works globally across emacs. E.g. if you need to customize your workflow, then third-party packages provide this functonality you need.
+For instance =hl-line-mode= that highlits current line. Switching to another buffer turns this mode off. Minor mode works only in one buffer, 
+but some of them can work globally too. 
+
+*** Basic Key bindings
+Bindings are completely flexible and customizable.
+The syntax is a litlle bit peculiar:
+ - =C-x C-s= Hold Ctrl and press 'x' and then 's' still holdind Ctrl.
+ - =C-x b= Release Ctrl and press 'b'
+Single letters can be interpreted as follows:
+
+| Letter | Key        |
+|--------+------------|
+| C      | Ctrl       |
+| M      | Alt (Meta) |
+| S      | Shift      |
+| s      | Super      |
+
+Prefixes:
+ - =C-x= prefix for all emacs primary key bindings
+ - =C-c= keybindings for current major mode. It also can be used for user defined keybindigs.
+
+** Opening and saving files
+Basic file operations:
+=C-x C-f= to open a file (find-file). 
+=C-x C-s= to save a file
+Save current buffer to another location (Save as..)
+=C-x C-w= to write a file
+
+** Switching buffers
+=C-x b= switch to a particular buffer.
+=C-x C-b= list all buffers
+=C-x left/right arrow= switch between buffer chain (next/previous)
+
+** Cut and copy text
+To kill (copy-delete) text
+1) Mark the region using =C-Space=
+2) Hit =C-w= to delete and copy the text into a kill ring
+3) Yank (paste) text with =C-y=
+
+** CUA mode
+Activates conventional keybindings =C-c=, =C-v=.
+
+** Undo and redo
+=C-/= to undo (=C-_= by default)
+=C-g C-/= to inverse undo direction
+
+** Cancelling operations
+E.g. cancels operation before it completes.
+=C-g= cancels command and brings you back into editing.
+Keeps you out of a jam in a lot of cases.
+
+** Describe bindings
+=M-x describe-bindings=
+=M-x describe-key= or =C-h k=
+
+** Help system 
+Emacs manual is built in, and you can navigate through it.
+You can simply go to /Help/ menu. 
+
+** Configuring emacs
+1) Customization UI
+To get there type =M-x customize=
+2) =init.el= file
+Actual emacs lisp code to configure emacs. You can define your own functions too.
+You can then share it between machines.
