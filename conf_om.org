@@ -45,9 +45,10 @@ For example =#+options: num:1= would turn your sample into:
 2. Another Heading
 #+END_SRC
 
-*** Remove/add table of contents ([[#+OPTIONS: toc:2          (only include two levels in TOC)%0A#+OPTIONS: toc:nil        (no default TOC at all)][description]])
-=#+OPTIONS: toc:2          (only include two levels in TOC)=
-=#+OPTIONS: toc:nil        (no default TOC at all)=
+*** Remove/add table of contents
+
+=#+OPTIONS: toc:2=          (only include two levels in TOC)
+=#+OPTIONS: toc:nil=        (no default TOC at all)
 
 ** Checklists in org-mode
 See [[https://redgreenrepeat.com/2019/10/04/checklists-in-org-mode/][this page]]:
