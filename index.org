@@ -2,6 +2,10 @@
 #+OPTIONS: toc:nil
 #+OPTIONS: num:nil
 
+-----
+
 * Notes and guides:
-See /emacs/ notes:
+- See /emacs/ notes:
 ([[https://pasvalietis.github.io/emacs_tutorial][link]])
+- See /Org-mode/ notes:
+([[https://pasvalietis.github.io/conf_om.html][link]])

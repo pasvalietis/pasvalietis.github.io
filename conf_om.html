@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Org mode introduction and package management</title>
+<!-- 2022-09-28 Wed 20:09 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Org-mode">
+<meta name="author" content="ivan">
+
+<link  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<style>
+/* org mode styles on top of twbs */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-size: 18px;
+    margin-bottom: 105px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 101px;
+    background-color: #f5f5f5;
+}
+
+footer > div {
+    padding: 10px;
+}
+
+footer p {
+    margin: 0 0 5px;
+    text-align: center;
+    font-size: 16px;
+}
+
+#table-of-contents {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+blockquote p {
+    font-size: 18px;
+}
+
+pre {
+    font-size: 16px;
+}
+
+.footpara {
+    display: inline-block;
+}
+
+figcaption {
+  font-size: 16px;
+  color: #666;
+  font-style: italic;
+  padding-bottom: 15px;
+}
+
+/* from twbs docs */
+
+.bs-docs-sidebar.affix {
+    position: static;
+}
+@media (min-width: 768px) {
+    .bs-docs-sidebar {
+        padding-left: 20px;
+    }
+}
+
+/* All levels of nav */
+.bs-docs-sidebar .nav > li > a {
+    display: block;
+    padding: 4px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #999;
+}
+.bs-docs-sidebar .nav > li > a:hover,
+.bs-docs-sidebar .nav > li > a:focus {
+    padding-left: 19px;
+    color: #A1283B;
+    text-decoration: none;
+    background-color: transparent;
+    border-left: 1px solid #A1283B;
+}
+.bs-docs-sidebar .nav > .active > a,
+.bs-docs-sidebar .nav > .active:hover > a,
+.bs-docs-sidebar .nav > .active:focus > a {
+    padding-left: 18px;
+    font-weight: bold;
+    color: #A1283B;
+    background-color: transparent;
+    border-left: 2px solid #A1283B;
+}
+
+/* Nav: second level (shown on .active) */
+.bs-docs-sidebar .nav .nav {
+    display: none; /* Hide by default, but at >768px, show it */
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 30px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav > li > a:focus {
+    padding-left: 29px;
+}
+.bs-docs-sidebar .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav > .active:focus > a {
+    padding-left: 28px;
+    font-weight: 500;
+}
+
+/* Nav: third level (shown on .active) */
+.bs-docs-sidebar .nav .nav .nav {
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 40px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav .nav > li > a:focus {
+    padding-left: 39px;
+}
+.bs-docs-sidebar .nav .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav .nav > .active:focus > a {
+    padding-left: 38px;
+    font-weight: 500;
+}
+
+/* Show and affix the side nav when space allows it */
+@media (min-width: 992px) {
+    .bs-docs-sidebar .nav > .active > ul {
+        display: block;
+    }
+    /* Widen the fixed sidebar */
+    .bs-docs-sidebar.affix,
+    .bs-docs-sidebar.affix-bottom {
+        width: 213px;
+    }
+    .bs-docs-sidebar.affix {
+        position: fixed; /* Undo the static from mobile first approach */
+        top: 20px;
+    }
+    .bs-docs-sidebar.affix-bottom {
+        position: absolute; /* Undo the static from mobile first approach */
+    }
+    .bs-docs-sidebar.affix .bs-docs-sidenav,.bs-docs-sidebar.affix-bottom .bs-docs-sidenav {
+        margin-top: 0;
+        margin-bottom: 0
+    }
+}
+@media (min-width: 1200px) {
+    /* Widen the fixed sidebar again */
+    .bs-docs-sidebar.affix-bottom,
+    .bs-docs-sidebar.affix {
+        width: 263px;
+    }
+}
+</style>
+<script>
+$(function() {
+    'use strict';
+
+    $('.bs-docs-sidebar li').first().addClass('active');
+
+    $(document.body).scrollspy({target: '.bs-docs-sidebar'});
+
+    $('.bs-docs-sidebar').affix();
+});
+</script>
+</head>
+<body>
+<div id="content" class="container">
+<div class="row"><div class="col-md-3 col-md-push-9"><nav id="table-of-contents">
+<div id="text-table-of-contents" class="bs-docs-sidebar">
+<ul class="nav">
+<li><a href="#sec-">Startup</a>
+<ul class="nav">
+<li><a href="#sec-">Create and edit emacs configuration file</a></li>
+<li><a href="#sec-">Installing orgmode itself and required packages manually</a></li>
+</ul>
+</li>
+<li><a href="#sec-">Org-mode features</a>
+<ul class="nav">
+<li><a href="#sec-">Configuring the appearance of an output file <i>(METADATA)</i></a></li>
+<li><a href="#sec-">Checklists in org-mode</a></li>
+</ul>
+</li>
+<li><a href="#sec-">Exporting notes</a>
+<ul class="nav">
+<li><a href="#sec-">Install htmlize</a></li>
+<li><a href="#sec-">Install latex-beamer export</a></li>
+<li><a href="#sec-">Install twitter bootstrap html export</a></li>
+<li><a href="#sec-">Automatic package management</a></li>
+</ul>
+</li>
+<li><a href="#sec-">Emacs configurations</a>
+<ul class="nav">
+<li><a href="#sec-">Setting up a minimalistic view</a></li>
+<li><a href="#sec-">Install and use <code>ivy</code></a></li>
+<li><a href="#sec-">Themes</a></li>
+<li><a href="#sec-">Package to preview .org within emacs</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+</div><div class="col-md-9 col-md-pull-3"><h1 class="title">Org mode introduction and package management</h1>
+
+<div id="outline-container-sec-" class="outline-2">
+<h2 id="sec-">Startup</h2>
+<div class="outline-text-2" id="text-">
+</div><div id="outline-container-sec-" class="outline-3">
+<h3 id="sec-">Create and edit emacs configuration file</h3>
+<div class="outline-text-3" id="text-">
+<p>
+Usually it can be found at <code>~/.emacs/init.el</code> or <code>~/.emacs.el, ~/.emacs.d/init.el, ~/.config/emacs/init.el</code>.
+</p>
+<ul class="org-ul">
+<li><a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html">Emacs init file</a>: syntax, <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Find-Init.html">location (and how to find init file)</a>, startup
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-" class="outline-3">
+<h3 id="sec-">Installing orgmode itself and required packages manually</h3>
+<div class="outline-text-3" id="text-">
+</div><div id="outline-container-sec-" class="outline-4">
+<h4 id="sec-">Activation</h4>
+<div class="outline-text-4" id="text-">
+<p>
+For the most emacs distributions Orgmode is already pre-installed.
+In order to <a href="https://orgmode.org/org.html#Activation">activate</a> it you need to edit the <code>init.el</code> file, see sample code below. (Pay attention to the quote sign when you copy from the <code>.pdf</code> file)
+</p>
+<div class="org-src-container">
+
+<pre class="src src-elisp"><span style="color: #cd853f;">;;;;</span><span style="color: #cd853f;">Org mode configuration</span>
+<span style="color: #cd853f;">;; </span><span style="color: #cd853f;">Enable Org mode</span>
+(<span style="color: #20b2aa; font-weight: bold;">require</span> '<span style="color: #1e90ff;">org</span>)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-" class="outline-4">
+<h4 id="sec-">Manual package management</h4>
+<div class="outline-text-4" id="text-">
+<p>
+All org-mode plugins as well as emacs extension can be dowloaded as emacs-lisp <i>.el</i> files.
+Next step is to edit the initialization file and provide the path of an any desired package.
+This can be done as follows:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-elisp"><span style="color: #cd853f;">;; </span><span style="color: #cd853f;">where I have htmlize.el</span>
+(add-to-list 'load-path <span style="color: #ffa07a;">"~/.emacs.d/lisp/"</span>)
+(<span style="color: #20b2aa; font-weight: bold;">require</span> '<span style="color: #1e90ff;">htmlize</span>)
+</pre>
+</div>
+
+<p>
+where <code>lisp</code> folder is one you use to store plugins .el files.
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-" class="outline-2">
+<h2 id="sec-">Org-mode features</h2>
+<div class="outline-text-2" id="text-">
+</div><div id="outline-container-sec-" class="outline-3">
+<h3 id="sec-">Configuring the appearance of an output file <i>(METADATA)</i></h3>
+<div class="outline-text-3" id="text-">
+</div><div id="outline-container-sec-" class="outline-4">
+<h4 id="sec-">Adjust numeration</h4>
+<div class="outline-text-4" id="text-">
+<p>
+<code>#+OPTIONS: num:nil</code>
+If you want to limit it to only a certain depth you can replace nil with an integer specifying up to which headline you want the numbers to appear. 
+For example <code>#+options: num:1</code> would turn your sample into:
+</p>
+<pre class="example">
+1. Heading
+   Sub-Heading
+2. Another Heading
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-" class="outline-4">
+<h4 id="sec-">Remove/add table of contents</h4>
+<div class="outline-text-4" id="text-">
+<p>
+<code>#+OPTIONS: toc:2</code>          (only include two levels in TOC)
+<code>#+OPTIONS: toc:nil</code>        (no default TOC at all)
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-" class="outline-3">
+<h3 id="sec-">Checklists in org-mode</h3>
+<div class="outline-text-3" id="text-">
+<p>
+See <a href="https://redgreenrepeat.com/2019/10/04/checklists-in-org-mode/">this page</a>:
+</p>
+<ul class="org-ul">
+<li>Progress details: just add <code>[/]</code> to display progress count and <code>[%]</code> to show percentage.
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-" class="outline-2">
+<h2 id="sec-">Exporting notes</h2>
+<div class="outline-text-2" id="text-">
+<p>
+General description of availiable back-ends can be found <a href="https://orgmode.org/manual/Exporting.html#Exporting">here</a>.
+</p>
+
+<hr >
+</div>
+<div id="outline-container-sec-" class="outline-3">
+<h3 id="sec-">Install htmlize</h3>
+<div class="outline-text-3" id="text-">
+<p>
+You can install it using code above. The source file <code>htmlize.el</code> can be downloaded <a href="https://github.com/hniksic/emacs-htmlize">here</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-" class="outline-3">
+<h3 id="sec-">Install latex-beamer export</h3>
+<div class="outline-text-3" id="text-">
+<p>
+By default some export backends are muted. To unmute the latex-beamer back-end add the following line into the <code>init.el</code> file.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-elisp">(<span style="color: #20b2aa; font-weight: bold;">require</span> '<span style="color: #1e90ff;">ox-beamer</span>)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-" class="outline-3">
+<h3 id="sec-">Install twitter bootstrap html export</h3>
+<div class="outline-text-3" id="text-">
+<p>
+Package and instructions (<a href="https://github.com/marsmining/ox-twbs">link</a>)
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-" class="outline-3">
+<h3 id="sec-">Automatic package management</h3>
+<div class="outline-text-3" id="text-">
+<p>
+Install <a href="https://melpa.org/#/getting-started">MELPA</a> package. This package append decription of packages into <code>init.el</code> file. 
+</p>
+<hr >
+</div>
+</div>
+</div>
+<div id="outline-container-sec-" class="outline-2">
+<h2 id="sec-">Emacs configurations</h2>
+<div class="outline-text-2" id="text-">
+<p>
+Launching emacs with <code>emacs -q</code> inhibits startup
+e.g. <code>emacs -q -l init.el</code>
+You can apply the changes right from the init.el configuration file by running 'M-x ev-b' (evaluate the buffer)
+</p>
+</div>
+
+<div id="outline-container-sec-" class="outline-3">
+<h3 id="sec-">Setting up a minimalistic view</h3>
+<div class="outline-text-3" id="text-">
+<p>
+What you can add to your init.el file:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-elisp">(<span style="color: #20b2aa; font-weight: bold;">setq</span> inhibit-startup-message t)
+
+(scroll-bar-mode -1) <span style="color: #cd853f;">; </span><span style="color: #cd853f;">Disable visible scrollbar</span>
+(tool-bar-mode -1)   <span style="color: #cd853f;">; </span><span style="color: #cd853f;">Disable the toolbar</span>
+(tooltip-mode -1)    <span style="color: #cd853f;">; </span><span style="color: #cd853f;">Disable tooltips</span>
+(set-fringe-mode 10) <span style="color: #cd853f;">; </span><span style="color: #cd853f;">Give some breathing room</span>
+
+(menu-bar-mode -1)   <span style="color: #cd853f;">; </span><span style="color: #cd853f;">Disable the menu bar</span>
+
+<span style="color: #cd853f;">; </span><span style="color: #cd853f;">Set up the visible bell</span>
+(<span style="color: #20b2aa; font-weight: bold;">setq</span> visible-bell t)
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-" class="outline-3">
+<h3 id="sec-">Install and use <code>ivy</code></h3>
+</div>
+
+<div id="outline-container-sec-" class="outline-3">
+<h3 id="sec-">Themes</h3>
+<div class="outline-text-3" id="text-">
+<p>
+Set a new color <a href="http://xahlee.info/emacs/emacs/emacs_playing_with_color_theme.html">palette</a>: run <code>M-x customize-themes</code> or <code>M-x load-theme</code>.
+If you want to install a color theme different from default you can do it <a href="https://github.com/sellout/emacs-color-theme-solarized">manually</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-" class="outline-3">
+<h3 id="sec-">Package to preview .org within emacs</h3>
+<div class="outline-text-3" id="text-">
+<p>
+<a href="https://github.com/jakebox/org-preview-html">org-preview-html</a>
+</p>
+</div>
+</div>
+</div>
+</div></div></div>
+<footer id="postamble" class="">
+<div><p class="author">Author: ivan</p>
+<p class="date">Created: 2022-09-28 Wed 20:09</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 26.3 (<a href="http://orgmode.org">Org-mode</a> 9.1.9)</p>
+</div>
+</footer>
+</body>
+</html>
