@@ -2,6 +2,10 @@
 #+OPTIONS: toc:nil
 #+OPTIONS: num:nil
 
+#+ATTR_HTML: width="50px"
+#+ATTR_ORG: :width 50
+[[./img/svetik.jpg]]
+
 -----
 
 * Notes and guides:
@@ -9,3 +13,4 @@
 ([[https://pasvalietis.github.io/emacs_tutorial][link]])
 - See /Org-mode/ notes:
 ([[https://pasvalietis.github.io/conf_om.html][link]])
+
